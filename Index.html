@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Expense Tracker 💸</title>
+  <!-- Google Fonts & Lucide Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: rgba(18, 25, 41, 0.65);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary-cyan: #00f2fe;
+      --primary-purple: #9d4edd;
+      --accent-pink: #ff2a85;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --green-glow: #00e676;
+      --red-glow: #ff5252;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(157, 78, 221, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.15) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      padding-bottom: 80px;
+      overflow-x: hidden;
+    }
+
+    /* Top Header */
+    header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9, 13, 22, 0.8);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      background: linear-gradient(135deg, var(--primary-cyan), var(--primary-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    /* Card Styling */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Title Styling */
+    .main-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #ffffff, var(--primary-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .sub-title {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* Navigation Tabs */
+    .nav-pills {
+      display: flex;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 6px;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 20px;
+      gap: 5px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px 10px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--primary-purple), var(--primary-cyan));
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+    }
+
+    /* Tab Contents */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Balance Hero Display */
+    .balance-box {
+      text-align: center;
+      padding: 25px 15px;
+      background: linear-gradient(135deg, rgba(157, 78, 221, 0.1), rgba(0, 242, 254, 0.1));
+      border: 1px solid rgba(0, 242, 254, 0.2);
+    }
+
+    .balance-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .balance-amount {
+      font-size: 2.7rem;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .stat-card {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      text-align: center;
+    }
+
+    .stat-card.credit { border-left: 4px solid var(--green-glow); }
+    .stat-card.expense { border-left: 4px solid var(--red-glow); }
+
+    .stat-val {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .stat-val.green { color: var(--green-glow); }
+    .stat-val.red { color: var(--red-glow); }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary-cyan);
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+    }
+
+    .type-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .type-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .type-btn.active.expense {
+      background: rgba(255, 82, 82, 0.2);
+      border-color: var(--red-glow);
+      color: var(--red-glow);
+    }
+
+    .type-btn.active.credit {
+      background: rgba(0, 230, 118, 0.2);
+      border-color: var(--green-glow);
+      color: var(--green-glow);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary-cyan), var(--primary-purple));
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 242, 254, 0.4);
+      transition: transform 0.2s ease;
+      margin-top: 10px;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Feed List */
+    .tx-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .tx-item:last-child {
+      border-bottom: none;
+    }
+
+    .tx-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tx-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tx-details h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .tx-details p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .tx-amount {
+      text-align: right;
+    }
+
+    .tx-amount .val {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .tx-amount .bal {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand">
+      <i data-lucide="wallet"></i> Personal Expense Tracker 💸
+    </div>
+    <div style="font-size: 0.8rem; color: var(--text-muted);">
+      Live Sync 🟢
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- Main Header Section -->
+    <h1 class="main-title">Personal Expense Tracker 💸</h1>
+    <p class="sub-title">Smart Real-Time Budgeting & Transaction Ledger 📊</p>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-pills">
+      <button class="tab-btn active" onclick="switchTab('dashboard', this)">
+        <i data-lucide="layout-dashboard"></i> Overview
+      </button>
+      <button class="tab-btn" onclick="switchTab('add-entry', this)">
+        <i data-lucide="plus-circle"></i> Add Transaction ➕
+      </button>
+    </div>
+
+    <!-- TAB 1: OVERVIEW & DASHBOARD -->
+    <div id="dashboard" class="tab-content active">
+      
+      <!-- Current Balance Card -->
+      <div class="glass-card balance-box">
+        <div class="balance-label">Available Balance 💰</div>
+        <div class="balance-amount" id="net-balance">₹0.00</div>
+        
+        <div class="stats-grid">
+          <div class="stat-card credit">
+            <div class="balance-label">Credited 📥</div>
+            <div class="stat-val green" id="total-credit">+₹0</div>
+          </div>
+          <div class="stat-card expense">
+            <div class="balance-label">Spent 📤</div>
+            <div class="stat-val red" id="total-expense">-₹0</div>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <button class="action-btn" onclick="openFormWithType('CREDIT')">
+            ➕ Add Money Received
+          </button>
+          <button class="action-btn" onclick="openFormWithType('EXPENSE')">
+            ➖ Add Expense Spent
+          </button>
+        </div>
+      </div>
+
+      <!-- Month Filter & Transactions Feed -->
+      <div class="glass-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="font-size: 1rem; font-weight: 700;">Recent Transactions 📜</h3>
+          <select id="month-filter" onchange="renderDashboard()" style="width: auto; padding: 6px 12px; font-size: 0.8rem;">
+            <option value="ALL">All Months 🗓️</option>
+            <option value="2026-09" selected>Sept 2026</option>
+            <option value="2026-08">Aug 2026</option>
+          </select>
+        </div>
+
+        <div id="tx-container">
+          <!-- Dynamically filled -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: ADD ENTRY FORM -->
+    <div id="add-entry" class="tab-content">
+      <div class="glass-card">
+        <h3 style="margin-bottom: 16px; text-align: center; font-weight: 700;">Log New Transaction 📝</h3>
+        
+        <!-- Type Selection -->
+        <div class="type-selector">
+          <div class="type-btn active expense" onclick="setType('EXPENSE', this)">Spent 📤 (Expense)</div>
+          <div class="type-btn credit" onclick="setType('CREDIT', this)">Received 📥 (Credit)</div>
+        </div>
+
+        <form id="entry-form" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label>Date 📅</label>
+            <input type="date" id="entry-date" required>
+          </div>
+
+          <div class="form-group">
+            <label>Amount (₹) 💵</label>
+            <input type="number" id="entry-amount" placeholder="e.g. 250" step="0.01" required>
+          </div>
+
+          <div class="form-group">
+            <label>Category 🏷️</label>
+            <select id="entry-category">
+              <option value="Food & Snacks 🍔">Food & Snacks 🍔</option>
+              <option value="Pocket Money 💰">Pocket Money / Allowance 💰</option>
+              <option value="Travel & Transport 🚌">Travel & Transport 🚌</option>
+              <option value="Academics & Books 📚">Academics & Books 📚</option>
+              <option value="Personal & Misc 🛒">Personal & Misc 🛒</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Reason / Note 📝</label>
+            <input type="text" id="entry-reason" placeholder="e.g. Canteen lunch, Xerox printouts" required>
+          </div>
+
+          <div class="form-group">
+            <label>Payment Screenshot / Receipt 🧾</label>
+            <input type="file" id="entry-file" accept="image/*">
+          </div>
+
+          <button type="submit" class="submit-btn">Save Record ✅</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+    document.getElementById('entry-date').valueAsDate = new Date();
+
+    let currentType = 'EXPENSE';
+
+    let transactions = [
+      { id: 1, date: '2026-09-12', type: 'CREDIT', category: 'Pocket Money 💰', reason: 'Pocket Money Received', amount: 5000 },
+      { id: 2, date: '2026-09-12', type: 'EXPENSE', category: 'Food & Snacks 🍔', reason: 'Hostel Canteen Snacks', amount: 120 },
+      { id: 3, date: '2026-09-13', type: 'EXPENSE', category: 'Academics & Books 📚', reason: 'Printouts & Books', amount: 45 }
+    ];
+
+    function switchTab(tabId, btnElement) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      if (btnElement) btnElement.classList.add('active');
+    }
+
+    function openFormWithType(type) {
+      const btn = type === 'CREDIT' ? document.querySelectorAll('.type-btn')[1] : document.querySelectorAll('.type-btn')[0];
+      setType(type, btn);
+      switchTab('add-entry', document.querySelectorAll('.tab-btn')[1]);
+    }
+
+    function setType(type, btnElement) {
+      currentType = type;
+      document.querySelectorAll('.type-btn').forEach(el => el.classList.remove('active'));
+      btnElement.classList.add('active');
+    }
+
+    function renderDashboard() {
+      const container = document.getElementById('tx-container');
+      container.innerHTML = '';
+
+      let totalCred = 0;
+      let totalExp = 0;
+      let runningBal = 0;
+
+      transactions.sort((a,b) => new Date(a.date) - new Date(b.date));
+
+      const processed = transactions.map(tx => {
+        if (tx.type === 'CREDIT') {
+          totalCred += tx.amount;
+          runningBal += tx.amount;
+        } else {
+          totalExp += tx.amount;
+          runningBal -= tx.amount;
+        }
+        return { ...tx, calculatedBal: runningBal };
+      });
+
+      document.getElementById('total-credit').innerText = `+₹${totalCred.toLocaleString('en-IN')}`;
+      document.getElementById('total-expense').innerText = `-₹${totalExp.toLocaleString('en-IN')}`;
+      document.getElementById('net-balance').innerText = `₹${runningBal.toLocaleString('en-IN')}`;
+
+      [...processed].reverse().forEach(tx => {
+        const isCred = tx.type === 'CREDIT';
+        const html = `
+          <div class="tx-item">
+            <div class="tx-info">
+              <div class="tx-icon" style="color: ${isCred ? 'var(--green-glow)' : 'var(--red-glow)'}">
+                <i data-lucide="${isCred ? 'arrow-down-left' : 'arrow-up-right'}"></i>
+              </div>
+              <div class="tx-details">
+                <h4>${tx.reason}</h4>
+                <p>${tx.date} • ${tx.category}</p>
+              </div>
+            </div>
+            <div class="tx-amount">
+              <div class="val" style="color: ${isCred ? 'var(--green-glow)' : 'var(--red-glow)'}">
+                ${isCred ? '+' : '-'}₹${tx.amount}
+              </div>
+              <div class="bal">Bal: ₹${tx.calculatedBal}</div>
+            </div>
+          </div>
+        `;
+        container.innerHTML += html;
+      });
+
+      lucide.createIcons();
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const date = document.getElementById('entry-date').value;
+      const amount = parseFloat(document.getElementById('entry-amount').value);
+      const category = document.getElementById('entry-category').value;
+      const reason = document.getElementById('entry-reason').value;
+
+      transactions.push({
+        id: Date.now(),
+        date,
+        type: currentType,
+        category,
+        reason,
+        amount
+      });
+
+      document.getElementById('entry-form').reset();
+      document.getElementById('entry-date').valueAsDate = new Date();
+      renderDashboard();
+      switchTab('dashboard', document.querySelectorAll('.tab-btn')[0]);
+    }
+
+    renderDashboard();
+  </script>
+</body>
+</html>
