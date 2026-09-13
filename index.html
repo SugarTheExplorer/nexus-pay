@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal Expense Tracker 💸</title>
+  <title>NEXUS-PAY 💳</title>
   <!-- Google Fonts & Lucide Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <style>
@@ -18,14 +18,14 @@
       --accent-pink: #ff2a85;
       --text-main: #f1f5f9;
       --text-muted: #94a3b8;
-      --green-glow: #00e676;
-      --red-glow: #ff5252;
+      --success-green: #10b981;
+      --danger-red: #ef4444;
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
       font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
@@ -33,49 +33,147 @@
     body {
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(circle at 10% 20%, rgba(157, 78, 221, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.15) 0%, transparent 40%);
+        radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(157, 78, 221, 0.12) 0%, transparent 45%);
       background-attachment: fixed;
       color: var(--text-main);
       min-height: 100vh;
-      padding-bottom: 80px;
-      overflow-x: hidden;
+      padding-bottom: 40px;
     }
 
-    /* Top Header */
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* Sleek Top Navbar */
     header {
-      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--card-border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(9, 13, 22, 0.8);
+      padding: 14px 18px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     }
 
-    .brand {
+    .logo-container {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-weight: 800;
-      font-size: 1.25rem;
+    }
+
+    .logo-icon {
+      width: 34px;
+      height: 34px;
       background: linear-gradient(135deg, var(--primary-cyan), var(--primary-purple));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 242, 254, 0.3);
+    }
+
+    .logo-text {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--success-green);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--success-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--success-green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Main Title Section */
+    .title-card {
+      text-align: center;
+      margin-bottom: 22px;
+      padding: 6px 10px;
+    }
+
+    .main-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 30%, var(--primary-cyan) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
       letter-spacing: -0.5px;
     }
 
-    /* Container */
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px 16px;
+    .main-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
     }
 
-    /* Card Styling */
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 5px;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 22px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--primary-cyan), #00b4d8);
+      color: #090d16;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+    }
+
+    /* Glass Cards */
     .glass-card {
       background: var(--card-bg);
       backdrop-filter: blur(16px);
@@ -84,186 +182,143 @@
       border-radius: 24px;
       padding: 22px;
       margin-bottom: 20px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-      transition: transform 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }
 
-    /* Title Styling */
-    .main-title {
-      font-size: 1.6rem;
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 6px;
-      background: linear-gradient(135deg, #ffffff, var(--primary-cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .sub-title {
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    /* Navigation Tabs */
-    .nav-pills {
-      display: flex;
-      background: rgba(255, 255, 255, 0.04);
-      padding: 6px;
-      border-radius: 16px;
-      border: 1px solid var(--card-border);
-      margin-bottom: 20px;
-      gap: 5px;
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 12px 10px;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      font-weight: 600;
-      font-size: 0.85rem;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg, var(--primary-purple), var(--primary-cyan));
-      color: #fff;
-      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
-    }
-
-    /* Tab Contents */
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Balance Hero Display */
-    .balance-box {
-      text-align: center;
-      padding: 25px 15px;
-      background: linear-gradient(135deg, rgba(157, 78, 221, 0.1), rgba(0, 242, 254, 0.1));
-      border: 1px solid rgba(0, 242, 254, 0.2);
-    }
-
+    /* Balance Section */
     .balance-label {
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       color: var(--text-muted);
+      font-weight: 700;
       margin-bottom: 6px;
-      font-weight: 600;
     }
 
     .balance-amount {
-      font-size: 2.7rem;
+      font-size: 2.5rem;
       font-weight: 800;
-      color: #fff;
-      text-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+      color: #ffffff;
+      margin-bottom: 18px;
+      letter-spacing: -1px;
     }
 
     .stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-top: 20px;
+      margin-bottom: 18px;
     }
 
-    .stat-card {
-      padding: 14px;
-      border-radius: 16px;
+    .stat-box {
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--card-border);
-      text-align: center;
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .stat-card.credit { border-left: 4px solid var(--green-glow); }
-    .stat-card.expense { border-left: 4px solid var(--red-glow); }
+    .stat-box.credit { border-left: 3px solid var(--success-green); }
+    .stat-box.debit { border-left: 3px solid var(--danger-red); }
+
+    .stat-title {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
 
     .stat-val {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 700;
-      margin-top: 4px;
     }
 
-    .stat-val.green { color: var(--green-glow); }
-    .stat-val.red { color: var(--red-glow); }
+    .stat-val.credit { color: var(--success-green); }
+    .stat-val.debit { color: var(--danger-red); }
 
-    /* Forms */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .action-btn {
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .action-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Form Styles */
     .form-group {
       margin-bottom: 16px;
     }
 
-    label {
+    .form-label {
       display: block;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
+      font-size: 0.85rem;
       font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
     }
 
-    input, select {
-      width: 100%;
+    .type-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .type-btn {
       padding: 14px;
-      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .type-btn.active.debit {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: var(--danger-red);
+      color: #f87171;
+    }
+
+    .type-btn.active.credit {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: var(--success-green);
+      color: #34d399;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(15, 23, 42, 0.8);
       border: 1px solid var(--card-border);
       border-radius: 14px;
       color: var(--text-main);
       font-size: 0.95rem;
       outline: none;
-      transition: border-color 0.3s ease;
+      transition: border-color 0.2s;
     }
 
-    input:focus, select:focus {
+    input:focus, select:focus, textarea:focus {
       border-color: var(--primary-cyan);
-      box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
-    }
-
-    .type-selector {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .type-btn {
-      flex: 1;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid var(--card-border);
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--text-muted);
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .type-btn.active.expense {
-      background: rgba(255, 82, 82, 0.2);
-      border-color: var(--red-glow);
-      color: var(--red-glow);
-    }
-
-    .type-btn.active.credit {
-      background: rgba(0, 230, 118, 0.2);
-      border-color: var(--green-glow);
-      color: var(--green-glow);
     }
 
     .submit-btn {
@@ -272,210 +327,224 @@
       border: none;
       border-radius: 16px;
       background: linear-gradient(135deg, var(--primary-cyan), var(--primary-purple));
-      color: #fff;
+      color: #ffffff;
       font-weight: 700;
       font-size: 1rem;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0, 242, 254, 0.4);
-      transition: transform 0.2s ease;
+      box-shadow: 0 8px 25px rgba(0, 242, 254, 0.35);
       margin-top: 10px;
     }
 
-    .submit-btn:active {
-      transform: scale(0.97);
+    /* Transaction List */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
     }
 
-    /* Feed List */
+    .month-select {
+      width: auto;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
     .tx-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 14px 0;
-      border-bottom: 1px solid var(--card-border);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .tx-item:last-child {
       border-bottom: none;
     }
 
-    .tx-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
     .tx-icon {
       width: 42px;
       height: 42px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .tx-details h4 {
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
-
-    .tx-details p {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .tx-amount {
-      text-align: right;
-    }
-
-    .tx-amount .val {
-      font-weight: 700;
-      font-size: 0.95rem;
-    }
-
-    .tx-amount .bal {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
-
-    .quick-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 15px;
-    }
-
-    .action-btn {
-      flex: 1;
-      padding: 12px;
       border-radius: 14px;
-      border: 1px solid var(--card-border);
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text-main);
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      margin-right: 12px;
     }
+
+    .tx-icon.debit { background: rgba(239, 68, 68, 0.12); color: var(--danger-red); }
+    .tx-icon.credit { background: rgba(16, 185, 129, 0.12); color: var(--success-green); }
+
+    .tx-info { flex: 1; }
+    .tx-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+    .tx-meta { font-size: 0.75rem; color: var(--text-muted); }
+    .tx-amount-box { text-align: right; }
+    .tx-amount { font-weight: 700; font-size: 0.95rem; }
+    .tx-amount.debit { color: var(--danger-red); }
+    .tx-amount.credit { color: var(--success-green); }
+    .tx-bal { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-  <!-- Top Header -->
-  <header>
-    <div class="brand">
-      <i data-lucide="wallet"></i> Personal Expense Tracker 💸
-    </div>
-    <div style="font-size: 0.8rem; color: var(--text-muted);">
-      Live Sync 🟢
-    </div>
-  </header>
-
   <div class="container">
-    
-    <!-- Main Header Section -->
-    <h1 class="main-title">Personal Expense Tracker 💸</h1>
-    <p class="sub-title">Smart Real-Time Budgeting & Transaction Ledger 📊</p>
+    <!-- Clean Navbar -->
+    <header>
+      <div class="logo-container">
+        <div class="logo-icon"><i data-lucide="wallet"></i></div>
+        <div class="logo-text">NEXUS-PAY</div>
+      </div>
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        Live Sync
+      </div>
+    </header>
 
-    <!-- Navigation Tabs -->
-    <div class="nav-pills">
-      <button class="tab-btn active" onclick="switchTab('dashboard', this)">
+    <!-- Main Title Card -->
+    <div class="title-card">
+      <h1 class="main-title">Personal Expense Tracker 💸</h1>
+      <p class="main-subtitle">Smart Real-Time Budgeting & Transaction Ledger 📊</p>
+    </div>
+
+    <!-- View Tabs -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" id="tab-overview" onclick="switchTab('overview')">
         <i data-lucide="layout-dashboard"></i> Overview
       </button>
-      <button class="tab-btn" onclick="switchTab('add-entry', this)">
-        <i data-lucide="plus-circle"></i> Add Transaction ➕
+      <button class="tab-btn" id="tab-add" onclick="switchTab('add')">
+        <i data-lucide="plus-circle"></i> Add Transaction
       </button>
     </div>
 
-    <!-- TAB 1: OVERVIEW & DASHBOARD -->
-    <div id="dashboard" class="tab-content active">
-      
-      <!-- Current Balance Card -->
-      <div class="glass-card balance-box">
+    <!-- OVERVIEW TAB -->
+    <div id="view-overview">
+      <div class="glass-card">
         <div class="balance-label">Available Balance 💰</div>
-        <div class="balance-amount" id="net-balance">₹0.00</div>
+        <div class="balance-amount" id="total-balance">₹4,835</div>
         
         <div class="stats-grid">
-          <div class="stat-card credit">
-            <div class="balance-label">Credited 📥</div>
-            <div class="stat-val green" id="total-credit">+₹0</div>
+          <div class="stat-box credit">
+            <div class="stat-title">CREDITED 📥</div>
+            <div class="stat-val credit" id="total-credited">+₹5,000</div>
           </div>
-          <div class="stat-card expense">
-            <div class="balance-label">Spent 📤</div>
-            <div class="stat-val red" id="total-expense">-₹0</div>
+          <div class="stat-box debit">
+            <div class="stat-title">SPENT 📤</div>
+            <div class="stat-val debit" id="total-spent">-₹165</div>
           </div>
         </div>
 
         <div class="quick-actions">
-          <button class="action-btn" onclick="openFormWithType('CREDIT')">
-            ➕ Add Money Received
+          <button class="action-btn" onclick="openAddForm('CREDIT')">
+            <i data-lucide="plus" style="color:#10b981;"></i> Add Money Received
           </button>
-          <button class="action-btn" onclick="openFormWithType('EXPENSE')">
-            ➖ Add Expense Spent
+          <button class="action-btn" onclick="openAddForm('DEBIT')">
+            <i data-lucide="minus" style="color:#ef4444;"></i> Add Expense Spent
           </button>
         </div>
       </div>
 
-      <!-- Month Filter & Transactions Feed -->
+      <!-- Recent Transactions -->
       <div class="glass-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-          <h3 style="font-size: 1rem; font-weight: 700;">Recent Transactions 📜</h3>
-          <select id="month-filter" onchange="renderDashboard()" style="width: auto; padding: 6px 12px; font-size: 0.8rem;">
-            <option value="ALL">All Months 🗓️</option>
-            <option value="2026-09" selected>Sept 2026</option>
-            <option value="2026-08">Aug 2026</option>
+        <div class="section-header">
+          <h3 style="font-size: 1.05rem; font-weight: 700;">Recent Transactions 📜</h3>
+          <select class="month-select" id="month-filter" onchange="renderTransactions()">
+            <option value="2026-09">Sep 2026</option>
+            <option value="2026-08" selected>Aug 2026</option>
+            <option value="2026-07">Jul 2026</option>
           </select>
         </div>
 
-        <div id="tx-container">
-          <!-- Dynamically filled -->
+        <div id="transaction-list">
+          <!-- Sample Rows -->
+          <div class="tx-item">
+            <div class="tx-icon debit"><i data-lucide="arrow-up-right"></i></div>
+            <div class="tx-info">
+              <div class="tx-title">Printouts & Books</div>
+              <div class="tx-meta">2026-09-13 • Academics & Books 📚</div>
+            </div>
+            <div class="tx-amount-box">
+              <div class="tx-amount debit">-₹45</div>
+              <div class="tx-bal">Bal: ₹4835</div>
+            </div>
+          </div>
+
+          <div class="tx-item">
+            <div class="tx-icon debit"><i data-lucide="arrow-up-right"></i></div>
+            <div class="tx-info">
+              <div class="tx-title">Library Refreshments</div>
+              <div class="tx-meta">2026-09-10 • Food & Snacks 🍔</div>
+            </div>
+            <div class="tx-amount-box">
+              <div class="tx-amount debit">-₹120</div>
+              <div class="tx-bal">Bal: ₹4880</div>
+            </div>
+          </div>
+
+          <div class="tx-item">
+            <div class="tx-icon credit"><i data-lucide="arrow-down-left"></i></div>
+            <div class="tx-info">
+              <div class="tx-title">Monthly Pocket Allowance</div>
+              <div class="tx-meta">2026-09-01 • Pocket Money / Income 💵</div>
+            </div>
+            <div class="tx-amount-box">
+              <div class="tx-amount credit">+₹5,000</div>
+              <div class="tx-bal">Bal: ₹5000</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- TAB 2: ADD ENTRY FORM -->
-    <div id="add-entry" class="tab-content">
+    <!-- ADD TRANSACTION TAB -->
+    <div id="view-add" class="hidden">
       <div class="glass-card">
-        <h3 style="margin-bottom: 16px; text-align: center; font-weight: 700;">Log New Transaction 📝</h3>
-        
-        <!-- Type Selection -->
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; text-align: center;">Log New Transaction 📝</h3>
+
         <div class="type-selector">
-          <div class="type-btn active expense" onclick="setType('EXPENSE', this)">Spent 📤 (Expense)</div>
-          <div class="type-btn credit" onclick="setType('CREDIT', this)">Received 📥 (Credit)</div>
+          <button type="button" class="type-btn active debit" id="btn-debit" onclick="setType('DEBIT')">
+            Spent 📤<br><span style="font-size: 0.75rem; font-weight: normal;">(Expense)</span>
+          </button>
+          <button type="button" class="type-btn credit" id="btn-credit" onclick="setType('CREDIT')">
+            Received 📥<br><span style="font-size: 0.75rem; font-weight: normal;">(Credit)</span>
+          </button>
         </div>
 
-        <form id="entry-form" onsubmit="handleFormSubmit(event)">
+        <form id="tx-form" onsubmit="handleFormSubmit(event)">
+          <input type="hidden" id="tx-type" value="DEBIT">
+
           <div class="form-group">
-            <label>Date 📅</label>
-            <input type="date" id="entry-date" required>
+            <label class="form-label">Date 📅</label>
+            <input type="date" id="tx-date" required>
           </div>
 
           <div class="form-group">
-            <label>Amount (₹) 💵</label>
-            <input type="number" id="entry-amount" placeholder="e.g. 250" step="0.01" required>
+            <label class="form-label">Amount (₹) 💵</label>
+            <input type="number" id="tx-amount" placeholder="e.g. 250" step="any" required>
           </div>
 
           <div class="form-group">
-            <label>Category 🏷️</label>
-            <select id="entry-category">
+            <label class="form-label">Category 🏷️</label>
+            <select id="tx-category" required>
               <option value="Food & Snacks 🍔">Food & Snacks 🍔</option>
-              <option value="Pocket Money 💰">Pocket Money / Allowance 💰</option>
-              <option value="Travel & Transport 🚌">Travel & Transport 🚌</option>
               <option value="Academics & Books 📚">Academics & Books 📚</option>
-              <option value="Personal & Misc 🛒">Personal & Misc 🛒</option>
+              <option value="Travel & Transport 🚌">Travel & Transport 🚌</option>
+              <option value="Hostel & Personal 🏠">Hostel & Personal 🏠</option>
+              <option value="Pocket Money / Income 💵">Pocket Money / Income 💵</option>
+              <option value="Others 🛍️">Others 🛍️</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label>Reason / Note 📝</label>
-            <input type="text" id="entry-reason" placeholder="e.g. Canteen lunch, Xerox printouts" required>
+            <label class="form-label">Reason / Item Description 📝</label>
+            <input type="text" id="tx-reason" placeholder="e.g. Snack bar at canteen" required>
           </div>
 
           <div class="form-group">
-            <label>Payment Screenshot / Receipt 🧾</label>
-            <input type="file" id="entry-file" accept="image/*">
+            <label class="form-label">Attach Receipt / Screenshot 📸 (Optional)</label>
+            <input type="file" id="tx-file" accept="image/*">
           </div>
 
           <button type="submit" class="submit-btn">Save Record ✅</button>
@@ -486,112 +555,55 @@
   </div>
 
   <script>
+    // Initialize Lucide Icons
     lucide.createIcons();
-    document.getElementById('entry-date').valueAsDate = new Date();
 
-    let currentType = 'EXPENSE';
+    // Default Date to Today
+    document.getElementById('tx-date').valueAsDate = new Date();
 
-    let transactions = [
-      { id: 1, date: '2026-09-12', type: 'CREDIT', category: 'Pocket Money 💰', reason: 'Pocket Money Received', amount: 5000 },
-      { id: 2, date: '2026-09-12', type: 'EXPENSE', category: 'Food & Snacks 🍔', reason: 'Hostel Canteen Snacks', amount: 120 },
-      { id: 3, date: '2026-09-13', type: 'EXPENSE', category: 'Academics & Books 📚', reason: 'Printouts & Books', amount: 45 }
-    ];
+    function switchTab(tab) {
+      const overviewTab = document.getElementById('tab-overview');
+      const addTab = document.getElementById('tab-add');
+      const overviewView = document.getElementById('view-overview');
+      const addView = document.getElementById('view-add');
 
-    function switchTab(tabId, btnElement) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-      
-      document.getElementById(tabId).classList.add('active');
-      if (btnElement) btnElement.classList.add('active');
+      if (tab === 'overview') {
+        overviewTab.classList.add('active');
+        addTab.classList.remove('active');
+        overviewView.classList.remove('hidden');
+        addView.classList.add('hidden');
+      } else {
+        addTab.classList.add('active');
+        overviewTab.classList.remove('active');
+        addView.classList.remove('hidden');
+        overviewView.classList.add('hidden');
+      }
     }
 
-    function openFormWithType(type) {
-      const btn = type === 'CREDIT' ? document.querySelectorAll('.type-btn')[1] : document.querySelectorAll('.type-btn')[0];
-      setType(type, btn);
-      switchTab('add-entry', document.querySelectorAll('.tab-btn')[1]);
+    function setType(type) {
+      document.getElementById('tx-type').value = type;
+      const btnDebit = document.getElementById('btn-debit');
+      const btnCredit = document.getElementById('btn-credit');
+
+      if (type === 'DEBIT') {
+        btnDebit.classList.add('active', 'debit');
+        btnCredit.classList.remove('active', 'credit');
+      } else {
+        btnCredit.classList.add('active', 'credit');
+        btnDebit.classList.remove('active', 'debit');
+      }
     }
 
-    function setType(type, btnElement) {
-      currentType = type;
-      document.querySelectorAll('.type-btn').forEach(el => el.classList.remove('active'));
-      btnElement.classList.add('active');
-    }
-
-    function renderDashboard() {
-      const container = document.getElementById('tx-container');
-      container.innerHTML = '';
-
-      let totalCred = 0;
-      let totalExp = 0;
-      let runningBal = 0;
-
-      transactions.sort((a,b) => new Date(a.date) - new Date(b.date));
-
-      const processed = transactions.map(tx => {
-        if (tx.type === 'CREDIT') {
-          totalCred += tx.amount;
-          runningBal += tx.amount;
-        } else {
-          totalExp += tx.amount;
-          runningBal -= tx.amount;
-        }
-        return { ...tx, calculatedBal: runningBal };
-      });
-
-      document.getElementById('total-credit').innerText = `+₹${totalCred.toLocaleString('en-IN')}`;
-      document.getElementById('total-expense').innerText = `-₹${totalExp.toLocaleString('en-IN')}`;
-      document.getElementById('net-balance').innerText = `₹${runningBal.toLocaleString('en-IN')}`;
-
-      [...processed].reverse().forEach(tx => {
-        const isCred = tx.type === 'CREDIT';
-        const html = `
-          <div class="tx-item">
-            <div class="tx-info">
-              <div class="tx-icon" style="color: ${isCred ? 'var(--green-glow)' : 'var(--red-glow)'}">
-                <i data-lucide="${isCred ? 'arrow-down-left' : 'arrow-up-right'}"></i>
-              </div>
-              <div class="tx-details">
-                <h4>${tx.reason}</h4>
-                <p>${tx.date} • ${tx.category}</p>
-              </div>
-            </div>
-            <div class="tx-amount">
-              <div class="val" style="color: ${isCred ? 'var(--green-glow)' : 'var(--red-glow)'}">
-                ${isCred ? '+' : '-'}₹${tx.amount}
-              </div>
-              <div class="bal">Bal: ₹${tx.calculatedBal}</div>
-            </div>
-          </div>
-        `;
-        container.innerHTML += html;
-      });
-
-      lucide.createIcons();
+    function openAddForm(type) {
+      setType(type);
+      switchTab('add');
     }
 
     function handleFormSubmit(e) {
       e.preventDefault();
-      const date = document.getElementById('entry-date').value;
-      const amount = parseFloat(document.getElementById('entry-amount').value);
-      const category = document.getElementById('entry-category').value;
-      const reason = document.getElementById('entry-reason').value;
-
-      transactions.push({
-        id: Date.now(),
-        date,
-        type: currentType,
-        category,
-        reason,
-        amount
-      });
-
-      document.getElementById('entry-form').reset();
-      document.getElementById('entry-date').valueAsDate = new Date();
-      renderDashboard();
-      switchTab('dashboard', document.querySelectorAll('.tab-btn')[0]);
+      alert('Transaction logged successfully!');
+      switchTab('overview');
     }
-
-    renderDashboard();
   </script>
 </body>
 </html>
