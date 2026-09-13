@@ -116,7 +116,7 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    /* Main Title Section */
+    /* Main Title Section - Restored Cyan to Purple Gradient */
     .title-card {
       text-align: center;
       margin-bottom: 22px;
@@ -124,9 +124,9 @@
     }
 
     .main-title {
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #ffffff 30%, var(--primary-cyan) 100%);
+      background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-purple) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 6px;
@@ -139,7 +139,7 @@
       font-weight: 500;
     }
 
-    /* Navigation Tabs */
+    /* Navigation Tabs - Restored Cyan to Purple Active Gradient */
     .nav-tabs {
       display: flex;
       background: rgba(15, 23, 42, 0.6);
@@ -167,10 +167,10 @@
     }
 
     .tab-btn.active {
-      background: linear-gradient(135deg, var(--primary-cyan), #00b4d8);
-      color: #090d16;
+      background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-cyan) 100%);
+      color: #ffffff;
       font-weight: 700;
-      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 242, 254, 0.35);
     }
 
     /* Glass Cards */
@@ -185,7 +185,12 @@
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }
 
-    /* Balance Section */
+    /* Centered Balance Section */
+    .balance-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
     .balance-label {
       font-size: 0.8rem;
       text-transform: uppercase;
@@ -196,11 +201,11 @@
     }
 
     .balance-amount {
-      font-size: 2.5rem;
+      font-size: 2.7rem;
       font-weight: 800;
       color: #ffffff;
-      margin-bottom: 18px;
       letter-spacing: -1px;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
     }
 
     .stats-grid {
@@ -215,6 +220,7 @@
       border-radius: 16px;
       padding: 14px;
       border: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
     }
 
     .stat-box.credit { border-left: 3px solid var(--success-green); }
@@ -391,7 +397,7 @@
 <body>
 
   <div class="container">
-    <!-- Clean Navbar -->
+    <!-- Clean Top Navbar -->
     <header>
       <div class="logo-container">
         <div class="logo-icon"><i data-lucide="wallet"></i></div>
@@ -403,13 +409,13 @@
       </div>
     </header>
 
-    <!-- Main Title Card -->
+    <!-- Main Title Card with Purple-Cyan Gradient -->
     <div class="title-card">
       <h1 class="main-title">Personal Expense Tracker 💸</h1>
       <p class="main-subtitle">Smart Real-Time Budgeting & Transaction Ledger 📊</p>
     </div>
 
-    <!-- View Tabs -->
+    <!-- View Tabs with Purple-Cyan Gradient -->
     <div class="nav-tabs">
       <button class="tab-btn active" id="tab-overview" onclick="switchTab('overview')">
         <i data-lucide="layout-dashboard"></i> Overview
@@ -422,8 +428,11 @@
     <!-- OVERVIEW TAB -->
     <div id="view-overview">
       <div class="glass-card">
-        <div class="balance-label">Available Balance 💰</div>
-        <div class="balance-amount" id="total-balance">₹4,835</div>
+        <!-- Centered Available Balance -->
+        <div class="balance-box">
+          <div class="balance-label">AVAILABLE BALANCE 💰</div>
+          <div class="balance-amount" id="total-balance">₹4,835</div>
+        </div>
         
         <div class="stats-grid">
           <div class="stat-box credit">
